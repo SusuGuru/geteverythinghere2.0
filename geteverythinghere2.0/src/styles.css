@@ -1,11 +1,9 @@
-
-You said:
 /* === GLOBAL RESET === */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "Inter", sans-serif;
   scroll-behavior: smooth;
 }
 
@@ -938,7 +936,7 @@ html {
   padding: 50px;
   min-height: 100vh;
   gap: 5px;
-  font-family: "Poppins", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 /* LEFT SIDE */
@@ -950,28 +948,31 @@ html {
 }
 
 .main-image {
-  width: 100%;
-  max-width: 600px;
-  border-radius: 0px;
+  margin-left: 100px;
+  width: 800px;
+  border-radius: 10px;
   box-shadow: 0 0px 20px rgba(0,0,0,0.4);
-  object-fit: cover; /* ensures it fills without distortion */
-}
-
+  object-fit: cover; 
+  height: auto;
+  }
+  
 .thumbnail-container {
+  margin-left: 100px;
   display: flex;
   gap: 12px;
   margin-top: 20px;
 }
 
 .thumbnail {
-  width: 80px;
-  height: 80px;
-  border-radius: 0px;
+  width: 110px;
+  height: 110px;
+  border-radius: 10px;
   object-fit: cover;
   cursor: pointer;
   opacity: 0.7;
   border: 2px solid transparent;
   transition: all 0.3s ease;
+  
 }
 
 .thumbnail.active,
@@ -983,11 +984,13 @@ html {
 
 /* RIGHT SIDE */
 .details-section {
-  flex: 1.2;
+  width: 80px;
+  margin-left: 50px;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 40px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  
 }
 
 .back-link {
@@ -1009,7 +1012,7 @@ html {
 
 .price {
   font-size: 22px;
-  color: #0a7cad;
+  color: #facc15;
   margin-bottom: 10px;
 }
 
@@ -1134,11 +1137,13 @@ html {
   border: 2px solid #3b82f6;
 }
 .details-section {
-  flex: 1.2;
-  background: rgba(15, 23, 42, 0.6); /* closer to bg-slate-900/50 */
+  margin-left: 20px ;
+  margin-right: 100px;
+  flex: 0.7;
+  background: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0px;
+  border-radius: 10px;
   padding: 30px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
