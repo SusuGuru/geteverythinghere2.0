@@ -15,20 +15,31 @@ export default function ProductDetail() {
   const [mainImage, setMainImage] = useState("");
   const [allImages, setAllImages] = useState([]);
 
+  // ✅ Only one useEffect — correct placement
   useEffect(() => {
     if (product) {
+      // Start gallery with the main product image
       const gallery = [product.img];
+
+      // Add color-specific images if available
       if (product.colorImages) {
         Object.values(product.colorImages).forEach((url) => {
-          if (url && !gallery.includes(url)) gallery.push(url);
+          if (url && url.trim() !== "" && !gallery.includes(url)) {
+            gallery.push(url);
+          }
         });
       }
 
-      setAllImages(gallery);
+      // Filter invalid entries and limit to only 3 images
+      const filteredGallery = gallery
+        .filter((img) => typeof img === "string" && img.trim() !== "")
+        .slice(0, 3);
+
+      setAllImages(filteredGallery);
 
       const defaultColor = product.colors ? product.colors[0] : "White";
       setSelectedColor(defaultColor);
-      setMainImage(gallery[0]);
+      setMainImage(filteredGallery[0]);
     }
   }, [productName, product]);
 
@@ -40,25 +51,24 @@ export default function ProductDetail() {
 
   if (!product) return <p className="not-found">Product not found.</p>;
 
- return (
-  <div>
-    {/* ✅ Product Detail Header */}
-    <header className="product-header">
-      <div className="header-container">
-        <Link to="/" className="logo">
-          GetEverythingHere
-        </Link>
+  return (
+    <div>
+      {/* ✅ Product Detail Header */}
+      <header className="product-header">
+        <div className="header-container">
+          <Link to="/" className="logo">
+            GetEverythingHere
+          </Link>
 
-        <nav>
-          <ul>
-            <li><Link to="/store">Product</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
-          </ul>
-        </nav>
-      </div> {/* ← properly closes header-container */}
-    </header>
-
+          <nav>
+            <ul>
+              <li><Link to="/store">Product</Link></li>
+              <li><Link to="/about">About</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
 
       {/* ✅ Product Detail Body */}
       <div className="product-detail">
