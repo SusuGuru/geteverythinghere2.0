@@ -651,6 +651,15 @@ color: #e7e5e4;
 /* Let the grid expand, push footer down */
 .product-grid {
   flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 products per row */
+  gap: 20px; /* spacing between items */
+  justify-items: center;
+  /* Optional: limit to two rows visually (if you have more than 10 items) */
+.product-grid {
+  max-height: calc((your_card_height + gap) * 2); /* optional */
+  overflow: hidden; /* hides extra rows */
+}
 }
 
 /* Footer stays at the bottom */
@@ -979,7 +988,7 @@ html {
 .thumbnail:hover {
   opacity: 1;
   border: 2px solid #00b4ff;
-  transform: scale(1.05);
+  transform: scale(1.05); 
 }
 
 /* RIGHT SIDE */
@@ -1232,5 +1241,248 @@ body:not(.all-active) .image-container {
   .product-header nav ul {
     flex-direction: column;
     gap: 10px;
+  }
+}
+/* === PRODUCT GRID LAYOUT === */
+.product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important; /* 5 products per row */
+  gap: 15px !important;
+  justify-items: center !important;
+  padding: 20px !important;
+  align-items: stretch !important;
+}
+
+/* Limit to only 10 products total (2 rows) */
+.product-grid > *:nth-child(n+11) {
+  display: none !important;
+}
+/* Make sure cards stretch evenly */
+.product-card {
+  width: 100% !important;
+  margin: 0 !important;
+}
+.product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important; /* 5 per row */
+  gap: 15px !important; /* spacing between products like your screenshot */
+  justify-content: center !important; /* center grid horizontally */
+  align-items: stretch !important;
+  padding: 30px 60px !important; /* add side padding to match screenshot */
+  margin: 0 auto !important;
+}
+
+.product-card {
+  width: 100% !important;
+  max-width: 250px !important;
+  margin: 0 !important;
+}
+
+/* Limit to 10 products (2 rows) */
+.product-grid > *:nth-child(n+11) {
+  display: none !important;
+}
+/* === PRODUCT GRID LAYOUT === */
+.product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(250px, 1fr)) !important; /* tighter column fit */
+column-gap: 5px !important; /* reduce horizontal spacing */
+row-gap: 20px !important;   /* keep vertical spacing comfortable */
+  justify-content: center !important; /* spreads them edge-to-edge */
+  align-items: start !important;
+  padding: 40px 60px !important; /* top/bottom and side breathing room */
+  width: 100vw !important; /* full screen width */
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Product cards */
+.product-card {
+  width: 100% !important;
+  max-width: 300px !important; /* consistent card size */
+  margin: 0 auto !important;
+}
+
+/* Limit to 10 products total (2 rows) */
+.product-grid > *:nth-child(n+11) {
+  display: none !important;
+}
+/* === PRODUCT GRID (DESKTOP) === */
+.product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(250px, 1fr)) !important;
+  column-gap: 5px !important;
+  row-gap: 20px !important;
+  justify-content: center !important;
+  align-items: start !important;
+  padding: 40px 60px !important;
+  width: 100vw !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+.product-card {
+  width: 100% !important;
+  max-width: 300px !important;
+  margin: 0 auto !important;
+}
+
+/* Limit to 10 products (2 rows) */
+.product-grid > *:nth-child(n+11) {
+  display: none !important;
+}
+
+/* === RESPONSIVENESS === */
+
+/* Medium screens (tablets) */
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(250px, 1fr)) !important;
+    column-gap: 10px !important;
+  }
+}
+
+/* Small screens (phones) */
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: 1fr !important; /* stack vertically */
+    row-gap: 25px !important;
+    padding: 20px !important;
+  }
+
+  .product-card {
+    max-width: 340px !important;
+    margin: 0 auto !important;
+  }
+
+  /* === CATEGORY TABS === */
+  .tabs {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    justify-content: flex-start !important;
+    padding: 10px !important;
+    gap: 10px !important;
+  }
+
+  .tab {
+    flex: 0 0 auto !important; /* prevent wrapping */
+    padding: 8px 16px !important;
+  }
+
+  /* === HEADER === */
+  header {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    padding: 10px 20px !important;
+  }
+
+  header .logo,
+  header nav,
+  header .actions {
+    display: flex !important;
+    align-items: center !important;
+    flex: 0 0 auto !important;
+  }
+
+  nav {
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+  }
+}
+/* === HEADER (Mobile layout) === */
+@media (max-width: 768px) {
+  header {
+    display: flex !important;
+    flex-direction: column !important; /* logo on top, nav below */
+    align-items: center !important;
+    text-align: center !important;
+    gap: 10px !important;
+    padding: 15px 20px !important;
+  }
+
+  header .logo {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-bottom: 8px !important;
+  }
+
+  header nav {
+    display: flex !important;
+    flex-direction: row !important; /* horizontal line */
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important; /* allows scrolling */
+    white-space: nowrap !important;
+    width: 100% !important;
+    gap: 12px !important;
+  }
+
+  header nav a {
+    display: inline-block !important;
+    text-decoration: none !important;
+    padding: 6px 10px !important;
+  }
+
+  header .actions {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    margin-top: 10px !important;
+  }
+}
+@media (max-width: 768px) {
+  header {
+    display: flex !important;
+    flex-direction: column !important; /* stack vertically */
+    align-items: center !important;
+    text-align: center !important;
+    gap: 10px !important;
+    padding: 15px 20px !important;
+  }
+
+  header .logo {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-bottom: 10px !important;
+  }
+
+  header nav {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+
+  /* 👇 FORCE nav to drop under logo */
+  header .logo,
+  header nav {
+    flex-basis: 100% !important;
+  }
+
+  header nav a {
+    display: inline-block !important;
+    padding: 6px 12px !important;
+    text-decoration: none !important;
+  }
+
+  header .actions {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin-top: 10px !important;
+    gap: 10px !important;
   }
 }

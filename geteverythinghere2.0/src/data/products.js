@@ -236,29 +236,6 @@ export const allProducts = [
     condition: "Brand New",
     esIM: "Unlocked",
   },
-  {
-    name: "Dell XPS 15",
-    price: "GHC 22,000",
-    status: "Out of Stock",
-    category: "Laptops",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBYG72_GPZQ_mlQ9E2sWBlGnlLZ9rsCD5ChjeuKIKiC0ilgtWZ4z80Sn-hG8eDi-doTfp0XW3RaiJ8NkDSvlzM70lLWy4wEUOOI28P3oKeHiwxXyKfyhm4-q1oNED-ea8CwRRz8wj8zaCTA-IC65F03R_kfMgLZfRTAL4pbE3EshFqJpBgMGIUjj7oWqbiT-RuuKsUiPYeVy3uxFZGzYbfg5RgQAjT9EdDM5CMOvVoiz0ZZhu-95_T-o7eYmGJsALRu-ojnjKOjOMv_",
-    available: false,
-    specs: [
-      "15.6-inch 4K OLED display",
-      "Intel Core i9 12th Gen",
-      "NVIDIA GeForce RTX 3060",
-      "Up to 64GB RAM",
-      "Up to 4TB SSD"
-    ],
-    colors: ["Silver", "Black"],
-    colorImages: {
-      Silver: "https://i.dell.com/sites/csimages/App-Merchandizing_Images/all/xps-15-9520-laptop-silver.jpg",
-      Black: "https://m.media-amazon.com/images/I/61jDIKGGzDL._AC_SL1500_.jpg"
-    },
-    storageOptions: ["512GB", "1TB", "2TB"],
-    condition: "Brand New",
-    esIM: "N/A",
-  },
 ];
 
 export default allProducts;
