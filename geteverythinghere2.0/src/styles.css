@@ -1486,3 +1486,221 @@ row-gap: 20px !important;   /* keep vertical spacing comfortable */
     gap: 10px !important;
   }
 }
+/* === PRODUCT DETAIL LAYOUT === */
+.product-detail {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 40px 5%;
+  box-sizing: border-box;
+}
+
+/* === IMAGE SECTION === */
+.image-section {
+  display: flex;
+  flex-direction: column; /* main image on top, thumbnails below */
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 600px;
+  max-width: 700px;
+}
+
+/* Main image */
+.main-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  object-fit: contain;
+}
+
+/* Thumbnails below main image */
+.thumbnail-container {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border 0.2s ease;
+}
+
+.thumbnail.active {
+  border: 2px solid #fff;
+  transform: scale(1.05);
+}
+
+/* === DETAILS SECTION === */
+.details-section {
+  flex: 1 1 400px;
+  max-width: 450px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* === RESPONSIVE ADJUSTMENTS === */
+@media (max-width: 900px) {
+  .product-detail {
+    flex-direction: column; /* details move below images */
+    align-items: center;
+  }
+
+  .image-section {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .main-image {
+    max-width: 90%;
+  }
+
+  .thumbnail {
+    width: 65px;
+    height: 65px;
+  }
+
+  .details-section {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 30px;
+  }
+}
+/* === FIX MAIN IMAGE OVERFLOW === */
+.image-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 600px;
+  max-width: 700px;
+  width: 100%;
+  overflow: hidden; /* keeps image from spilling out */
+}
+
+.main-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  object-fit: contain;
+  display: block;
+  margin: 0 auto; /* center it perfectly */
+}
+
+/* === HEADER NAVIGATION FIX === */
+.product-header {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* allows it to adapt when narrow */
+  width: 100%;
+  max-width: 1200px;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* nav stays horizontal */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+nav ul li a:hover {
+  color: #ffd700;
+}
+
+/* Keep header horizontal on small screens */
+@media (max-width: 900px) {
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  nav ul {
+    flex-wrap: nowrap;
+    overflow-x: auto; /* lets you scroll horizontally if needed */
+    justify-content: center;
+  }
+
+  nav ul::-webkit-scrollbar {
+    display: none; /* hide scrollbar for cleaner look */
+  }
+
+  .main-image {
+    max-width: 90%;
+  }
+}
+/* === HEADER RESPONSIVE FIX === */
+@media (max-width: 768px) {
+  .product-header {
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .header-container {
+    flex-direction: column !important; /* stack logo and nav */
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .header-container .logo {
+    margin-bottom: 10px !important;
+  }
+
+  .header-container nav ul {
+    display: flex !important;
+    flex-direction: row !important; /* keep items side by side */
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 15px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .header-container nav ul li {
+    list-style: none;
+  }
+
+  .header-container nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+  }
+}
