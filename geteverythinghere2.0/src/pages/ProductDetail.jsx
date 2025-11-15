@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { allProducts } from "../data/products";
-import "../styles.css";
+import "../stylesheet/details.css";
 
 export default function ProductDetail() {
   const { productName } = useParams();

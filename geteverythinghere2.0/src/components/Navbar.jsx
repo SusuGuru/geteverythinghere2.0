@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import "../styles.css";
+import "../stylesheet/navbar.css";
 
 export default function Navbar() {
   const location = useLocation();
@@ -35,15 +35,9 @@ export default function Navbar() {
 
         <nav className="nav-links">
           <Link to="/">Home</Link>
-          <a href="#services" onClick={handleScroll("services")}>
-            Services
-          </a>
-          <a href="#about" onClick={handleScroll("about")}>
-            About
-          </a>
-          <a href="#contact" onClick={handleContactClick}>
-            Contact
-          </a>
+          <a href="#services" onClick={handleScroll("services")}>Services</a>
+          <a href="#about" onClick={handleScroll("about")}>About</a>
+          <a href="#contact" onClick={handleContactClick}>Contact</a>
         </nav>
       </div>
     </header>

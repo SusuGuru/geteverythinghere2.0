@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { allProducts } from "../data/products";
-import "../styles.css";
+import "../stylesheet/store.css";
 
 export default function StorePage() {
   const [activeCategory, setActiveCategory] = useState("All");
