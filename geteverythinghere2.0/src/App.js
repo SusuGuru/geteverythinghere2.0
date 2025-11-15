@@ -4,7 +4,11 @@ import Navbar from "./components/Navbar";
 import LandingPage from "./pages/LandingPage";
 import StorePage from "./pages/StorePage";
 import ProductDetailsPage from "./pages/ProductDetail";
-import "./styles.css";
+import './stylesheet/navbar.css';
+import './stylesheet/landing.css';
+import './stylesheet/store.css';
+import './stylesheet/details.css';
+
 
 // Wrapper to conditionally render Navbar
 function AppContent() {
