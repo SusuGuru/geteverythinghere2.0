@@ -1123,3 +1123,11 @@ nav ul li a:hover {
     font-size: 16px;
   }
 }
+.product-header {
+  background: linear-gradient(90deg, #01101e, #015ac2); /* deep blue → light blue */
+  padding: 20px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}

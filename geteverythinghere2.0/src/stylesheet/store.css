@@ -577,3 +577,21 @@ color: #e7e5e4;
     height: 180px;
   }
 }
+/* Existing product grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns by default */
+  gap: 20px;
+}
+
+/* Responsive: switch to single column on small screens */
+@media screen and (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: 1fr; /* 1 column */
+    gap: 16px;
+  }
+
+  .product-card {
+    width: 100%; /* make sure cards stretch fully */
+  }
+}

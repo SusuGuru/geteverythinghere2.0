@@ -10,18 +10,16 @@ import './stylesheet/landing.css';
 import './stylesheet/store.css';
 import './stylesheet/details.css';
 
-
 // Wrapper to conditionally render Navbar
 function AppContent() {
   const location = useLocation();
 
-  // Hide navbar ONLY on landing page
-  const shouldHideNavbar = location.pathname === "/";
+  // Show Navbar ONLY on the Store page
+  const shouldShowNavbar = location.pathname === "/store";
 
   return (
     <div className="App">
-      {/* Show Navbar everywhere except Landing Page */}
-      {!shouldHideNavbar && <Navbar />}
+      {shouldShowNavbar && <Navbar />} {/* Navbar only on Store page */}
 
       <Routes>
         <Route path="/" element={<LandingPage />} />

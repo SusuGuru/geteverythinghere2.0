@@ -62,7 +62,7 @@ export default function LandingPage() {
                 className="about-img"
                 style={{
                   backgroundImage:
-                    "url('https://lh3.googleusercontent.com/aida-public/...')",
+                    "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDnk8gXM2RkrstjHDH_E0OQKtZydStQ7DOgyqNTezJUDPU-dgVJ7mnXqzMjAuXH1OVkKLPZ0UYoF4gTnzQzjNaIXlZekJtQS0DuVNc2EkBPjNm2S-oG7pQKCsOU_YlPEAFnB7Gmi9VOIN3OiBaH-uUL0EREUoq14KZ1msOnWdkub01vowL02dH6Noj1nO00VtkoXobPNIxhF6mE37s9ypQxmPyF6sF2m_ZSrPeIaaJgVOcy8JjtjhY6-cR40YnlmRS3a9O_fR-ygaHF')",
                 }}
               />
               <div className="about-info">
