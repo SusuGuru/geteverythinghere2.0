@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import LandingPage from "./pages/LandingPage";
 import StorePage from "./pages/StorePage";
 import ProductDetailsPage from "./pages/ProductDetail";
+
 import './stylesheet/navbar.css';
 import './stylesheet/landing.css';
 import './stylesheet/store.css';
@@ -13,16 +14,13 @@ import './stylesheet/details.css';
 // Wrapper to conditionally render Navbar
 function AppContent() {
   const location = useLocation();
-  const hideNavbarOn = ["/product"]; // All routes starting with /product
 
-  // Check if current path starts with any of the listed routes
-  const shouldHideNavbar = hideNavbarOn.some((path) =>
-    location.pathname.startsWith(path)
-  );
+  // Hide navbar ONLY on landing page
+  const shouldHideNavbar = location.pathname === "/";
 
   return (
     <div className="App">
-      {/* Show Navbar only if not on Product Details Page */}
+      {/* Show Navbar everywhere except Landing Page */}
       {!shouldHideNavbar && <Navbar />}
 
       <Routes>

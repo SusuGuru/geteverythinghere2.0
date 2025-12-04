@@ -196,17 +196,6 @@ export default function LandingPage() {
       {/* FOOTER */}
       <footer className="w-full bg-[#4B2E2A] text-white py-12">
         <div className="max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center gap-6">
-
-          {/* Logo / Brand */}
-          <div className="flex flex-col items-center md:items-start text-2xl font-bold tracking-wider gap-2">
-            <span>Digital Hub</span>
-            <img
-              src="logo.png"
-              alt="Logo"
-              className="w-16 h-16 object-contain"
-            />
-          </div>
-
           {/* Social Icons */}
           <div className="flex gap-6">
             <a
@@ -250,12 +239,12 @@ export default function LandingPage() {
           </div>
 
           {/* Footer Text */}
-          <div className="text-sm text-center md:text-right opacity-90">
+          <div className="text-sm text-center opacity-90">
             © 2025 Digital Hub Ghana. All rights reserved.
           </div>
         </div>
       </footer>
 
     </div>
-  );
-}
+  );        
+}          
