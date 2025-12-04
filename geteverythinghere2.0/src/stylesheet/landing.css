@@ -13,6 +13,7 @@
   padding: 60px 20px;
 }
 
+
 /* Floating images */
 .hero-floating img {
   position: absolute;
@@ -473,5 +474,222 @@ body {
   }
   .button-group {
     gap: 10px;
+  }
+}
+/* === CONTACT SECTION (NEW STYLE LIKE SCREENSHOT) === */
+.contact-section {
+  background: linear-gradient(180deg, #0a1930, #0b1736);
+  text-align: center;
+  padding: 80px 10%;
+  color: #ffffff;
+}
+
+.contact-section h2 {
+  font-size: 2.6rem;
+  margin-bottom: 12px;
+}
+
+.contact-section p {
+  color: #cbd5e1;
+  margin-bottom: 35px;
+  font-size: 1rem;
+}
+
+/* FORM WRAPPER */
+.contact-box {
+  width: 100%;
+  max-width: 550px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* INPUTS */
+.contact-box input,
+.contact-box textarea {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1rem;
+  outline: none;
+}
+
+.contact-box input::placeholder,
+.contact-box textarea::placeholder {
+  color: #9db4d5;
+}
+
+/* BUTTONS ROW */
+.contact-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* SUBMIT BUTTON */
+.btn-submit {
+  background: #2563eb;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-submit:hover {
+  background: #1d4fd8;
+}
+
+/* WHATSAPP BUTTON */
+.btn-whatsapp {
+  background: #1e40af;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-whatsapp:hover {
+  background: #2d4fc7;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .contact-buttons {
+    flex-direction: column;
+  }
+}
+/* FOOTER */
+footer {
+  background-color: #3a2918;
+  color: #bbb;
+  padding: 25px 20px;
+}
+
+footer .footer-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Logo */
+footer .footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+footer .footer-logo img {
+  width: 40px;  /* small size */
+  height: 40px;
+  object-fit: contain;
+}
+
+/* Social icons */
+footer .footer-social {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+footer .footer-social img {
+  width: 24px;   /* smaller icons */
+  height: 24px;
+  object-fit: contain;
+  transition: transform 0.3s;
+}
+
+footer .footer-social a:hover img {
+  transform: scale(1.2);
+}
+
+/* Footer text */
+footer .footer-text {
+  font-size: 0.9rem;
+  text-align: center;
+  color: #ccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  footer .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+.site-footer {
+  background-color: #3a2918;
+  color: #bbb;
+  padding: 25px 20px;
+}
+/* FORCE correct footer icon size */
+footer img,
+.site-footer img {
+  width: 28px !important;
+  height: 28px !important;
+  object-fit: contain;
+}
+/* FOOTER STYLING */
+footer {
+  background-color: #3a2918;
+  color: #bbb;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+footer > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* vertical spacing between logo, social icons, and text */
+}
+
+footer .flex.flex-col.items-center.md\:items-start.text-2xl.font-bold.tracking-wider.gap-2 {
+  flex-direction: column;
+  align-items: center; /* center the logo and text */
+  gap: 10px; /* spacing between logo and brand text */
+}
+
+footer .flex.gap-6 {
+  justify-content: center; /* center social icons */
+  gap: 20px; /* spacing between each social icon */
+}
+
+footer .text-sm.text-center.md\:text-right.opacity-90 {
+  text-align: center; /* center the footer text */
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+/* Social icon hover effect */
+footer .flex.gap-6 a img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  transition: transform 0.3s;
+}
+
+footer .flex.gap-6 a:hover img {
+  transform: scale(1.2);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  footer > div {
+    gap: 15px;
   }
 }
