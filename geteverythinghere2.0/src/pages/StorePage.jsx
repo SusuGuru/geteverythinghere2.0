@@ -1,51 +1,77 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { allProducts } from "../data/products";
 import "../stylesheet/store.css";
 
+const capitalize = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "");
+
 export default function StorePage() {
-  const [activeCategory, setActiveCategory] = useState("All");
   const [products, setProducts] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const categories = ["All", "iPhones", "Laptops", "Accessories", "Consoles", "TVs"];
 
-  // Simulate API call
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setProducts(allProducts);
-      setLoading(false);
-    }, 1500);
+    const fetchProducts = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch("https://geh-backend.onrender.com/products/");
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const data = await res.json();
+
+        const list = data.map((p) => ({
+          id: p._id,
+          name: p.productName,
+          price: p.productPrice,
+          img:
+            Array.isArray(p.productImages) && p.productImages.length > 0
+              ? `https://geh-backend.onrender.com${p.productImages[0]}`
+              : "/placeholder-image.png",
+          category: (() => {
+            let cat = capitalize(p.productCategory);
+            if (cat === "Iphones") cat = "iPhones";
+            return cat;
+          })(),
+          description: p.productDescription,
+          available: p.productStock > 0,
+        }));
+
+        setProducts(list);
+        setFiltered(list);
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setError(err.message || "Failed to load products");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
-  // Filtered products based on category
-  const filteredProducts =
-    activeCategory === "All"
-      ? products
-      : products.filter((p) => p.category === activeCategory);
-
-  // Handle category switching + body class
-  const handleCategoryChange = (category) => {
-    setActiveCategory(category);
-
-    if (category === "All") {
-      document.body.classList.add("all-active");
-    } else {
-      document.body.classList.remove("all-active");
+  useEffect(() => {
+    let result = products;
+    if (activeCategory !== "All") result = result.filter((p) => p.category === activeCategory);
+    if (search.trim()) {
+      const q = search.trim().toLowerCase();
+      result = result.filter(
+        (p) =>
+          p.name?.toLowerCase().includes(q) ||
+          p.description?.toLowerCase().includes(q)
+      );
     }
-  };
+    setFiltered(result);
+  }, [products, activeCategory, search]);
 
-  // Generate placeholder cards
   const placeholders = Array.from({ length: 8 }).map((_, i) => (
     <div key={i} className="product-card placeholder">
       <div className="image-container placeholder-box">Loading...</div>
       <div className="product-info">
         <h3 className="product-name">Loading...</h3>
-        <div className="status">
-          <span className="dot grey"></span>
-          <span className="status-text grey-text">Loading...</span>
-        </div>
         <p className="price price-grey">Loading...</p>
       </div>
     </div>
@@ -53,55 +79,50 @@ export default function StorePage() {
 
   return (
     <div className="store-page">
-      {/* Category Tabs */}
-      <div className="tabs">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            className={`tab ${activeCategory === cat ? "active" : ""}`}
-            onClick={() => handleCategoryChange(cat)}
-          >
-            {cat}
-          </button>
-        ))}
+      <div className="store-header">
+        <h1>Store</h1>
+        <div className="store-controls">
+          <div className="tabs">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                className={`tab ${activeCategory === cat ? "active" : ""}`}
+                onClick={() => setActiveCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+          <div className="search-box">
+            <input
+              type="search"
+              placeholder="Search products..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Products Grid */}
+      {error && <div className="error-banner">Error: {error}</div>}
+
       <div className="product-grid">
         {loading
           ? placeholders
-          : filteredProducts.map((p, i) => (
-              <Link
-                to={`/product/${p.name.replace(/\s+/g, "-").toLowerCase()}`}
-                key={i}
-                className="product-card"
-              >
+          : filtered.length === 0
+          ? <div className="empty-state"><p>No products found.</p></div>
+          : filtered.map((p) => (
+              <Link to={`/products/${p.id}`} key={p.id} className="product-card">
                 <div className="image-container">
-                  {p.img ? (
-                    <img src={p.img} alt={p.name} />
-                  ) : (
-                    <div className="placeholder-box">Image Coming Soon</div>
-                  )}
+                  <img
+                    src={p.img}
+                    alt={p.name}
+                    onError={(e) => e.currentTarget.src = "/placeholder-image.png"}
+                  />
                 </div>
                 <div className="product-info">
                   <h3 className="product-name">{p.name}</h3>
-                  <div className="status">
-                    <span
-                      className={`dot ${p.available ? "green" : "red"}`}
-                    ></span>
-                    <span
-                      className={`status-text ${
-                        p.available ? "green-text" : "grey-text"
-                      }`}
-                    >
-                      {p.status}
-                    </span>
-                  </div>
-                  <p
-                    className={`price ${
-                      p.available ? "price-green" : "price-grey"
-                    }`}
-                  >
+                  <p className={`price ${p.available ? "price-green" : "price-grey"}`}>
                     {p.price}
                   </p>
                 </div>
@@ -109,12 +130,11 @@ export default function StorePage() {
             ))}
       </div>
 
-      {/* Footer */}
       <footer className="store-footer">
         <p>© 2025 GetEverythingHere. All rights reserved.</p>
         <div className="footer-right">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
+          <button type="button">Privacy Policy</button>
+          <button type="button">Terms of Service</button>
         </div>
       </footer>
     </div>

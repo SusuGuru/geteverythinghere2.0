@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../stylesheet/navbar.css";
+import logo from "../assets/EVERYTHING.png";
 
 export default function Navbar() {
   const location = useLocation();
@@ -29,11 +30,10 @@ export default function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar-content">
-        <div className="nav-logo">
-          <Link to="/">GetEverythingHere</Link>
-        </div>
-
         <nav className="nav-links">
+          <Link to="/">
+            <img src={logo} alt="Logo" className="logo-img" />
+          </Link>
           <Link to="/">Home</Link>
           <a href="#services" onClick={handleScroll("services")}>Services</a>
           <a href="#about" onClick={handleScroll("about")}>About</a>

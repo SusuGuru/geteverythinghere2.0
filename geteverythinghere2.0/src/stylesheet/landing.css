@@ -693,3 +693,17 @@ footer .flex.gap-6 a:hover img {
     gap: 15px;
   }
 }
+/* Social icons */
+footer .flex.gap-6 a img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  transition: transform 0.3s;
+  margin: 0 8px; /* adds a little space between icons */
+  filter: brightness(0) saturate(100%) invert(38%) sepia(28%) saturate(341%) hue-rotate(10deg) brightness(95%) contrast(90%);
+  /* light brown color filter */
+}
+
+footer .flex.gap-6 a:hover img {
+  transform: scale(1.2);
+}

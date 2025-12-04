@@ -165,3 +165,14 @@ html {
     padding: 8px 0;
   }
 }
+.nav-logo .logo-link {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* space between logo and text */
+  text-decoration: none;
+}
+
+ .logo-img {
+  height: 150px; /* adjust to your preferred size */
+}
+
