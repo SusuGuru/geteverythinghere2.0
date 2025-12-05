@@ -2,8 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import "../stylesheet/store.css";
 
-const capitalize = (s) =>
-  s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
+const capitalize = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "");
 
 const getImageUrl = (imgPath) => {
   if (!imgPath) return "/placeholder-image.png";
@@ -31,22 +30,35 @@ export default function StorePage() {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
 
+        console.log("Raw product data:", data); // Debug backend fields
+
         const list = data.map((p) => ({
           id: p._id || p.id || p.productId,
           name: p.productName || p.title || p.name || "Unnamed Product",
           price: p.productPrice || p.price || p.amount || 0,
           img: getImageUrl(
             (Array.isArray(p.productImages) && p.productImages[0]) ||
-              p.image ||
-              (p.images && p.images[0])
+            p.image ||
+            (p.images && p.images[0])
           ),
           category: capitalize(p.productCategory || p.category || p.type || "Other"),
           description: p.productDescription || p.description || p.details || "",
-          available:
-            (p.productStock ?? p.stock ?? p.qty ?? p.quantity ??
-              (typeof p.available === "string"
-                ? p.available.toLowerCase() === "available"
-                : 0)) > 0,
+          available: (() => {
+            // Check numeric stock fields first
+            const stock = p.productStock ?? p.stock ?? p.qty ?? p.quantity;
+            if (stock != null) {
+              const stockNum = Number(stock);
+              if (!isNaN(stockNum)) return stockNum > 0;
+            }
+
+            // Check string field
+            if (p.available != null && typeof p.available === "string") {
+              return p.available.trim().toLowerCase() === "available";
+            }
+
+            // Default fallback
+            return false;
+          })(),
         }));
 
         setProducts(list);
@@ -117,31 +129,29 @@ export default function StorePage() {
           : filtered.length === 0
           ? <div className="empty-state"><p>No products found.</p></div>
           : filtered.map((p, index) => (
-              <Link
-                to={`/products/${p.id}`}
-                key={p.id || `${p.name}-${index}`}
-                className="product-card"
-              >
-                <div className="image-container">
-                  <img
-                    src={p.img}
-                    alt={p.name}
-                    onError={(e) => (e.currentTarget.src = "/placeholder-image.png")}
-                  />
-                </div>
-                <div className="product-info">
-                  <h3 className="product-name">{p.name}</h3>
-                  <p className={`price ${p.available ? "price-green" : "price-grey"}`}>
-                    GHC {Number(p.price).toFixed(2)}
-                  </p>
-                  <span
-                    className={`availability-tag ${p.available ? "available" : "unavailable"}`}
-                  >
-                    {p.available ? "Available" : "Out of stock"}
-                  </span>
-                </div>
-              </Link>
-            ))}
+            <Link
+              to={`/products/${p.id}`}
+              key={p.id || `${p.name}-${index}`}
+              className="product-card"
+            >
+              <div className="image-container">
+                <img
+                  src={p.img}
+                  alt={p.name}
+                  onError={(e) => (e.currentTarget.src = "/placeholder-image.png")}
+                />
+              </div>
+              <div className="product-info">
+                <h3 className="product-name">{p.name}</h3>
+                <p className={`price ${p.available ? "price-green" : "price-grey"}`}>
+                  GHC {Number(p.price).toFixed(2)}
+                </p>
+                <span className={`availability-tag ${p.available ? "available" : "unavailable"}`}>
+                  {p.available ? "Available" : "Out of stock"}
+                </span>
+              </div>
+            </Link>
+          ))}
       </div>
 
       <footer className="store-footer">
