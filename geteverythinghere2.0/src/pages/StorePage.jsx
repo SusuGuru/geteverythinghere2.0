@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import "../stylesheet/store.css";
 
-const capitalize = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "");
+const capitalize = (s) =>
+  s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
 
 export default function StorePage() {
   const [products, setProducts] = useState([]);
-  const [filtered, setFiltered] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -25,8 +25,8 @@ export default function StorePage() {
 
         const list = data.map((p) => ({
           id: p._id,
-          name: p.productName,
-          price: p.productPrice,
+          name: p.productName || "Unnamed Product",
+          price: p.productPrice || 0,
           img:
             Array.isArray(p.productImages) && p.productImages.length > 0
               ? `https://geh-backend.onrender.com${p.productImages[0]}`
@@ -36,12 +36,11 @@ export default function StorePage() {
             if (cat === "Iphones") cat = "iPhones";
             return cat;
           })(),
-          description: p.productDescription,
+          description: p.productDescription || "",
           available: p.productStock > 0,
         }));
 
         setProducts(list);
-        setFiltered(list);
       } catch (err) {
         console.error("Fetch error:", err);
         setError(err.message || "Failed to load products");
@@ -53,18 +52,15 @@ export default function StorePage() {
     fetchProducts();
   }, []);
 
-  useEffect(() => {
-    let result = products;
-    if (activeCategory !== "All") result = result.filter((p) => p.category === activeCategory);
-    if (search.trim()) {
-      const q = search.trim().toLowerCase();
-      result = result.filter(
-        (p) =>
-          p.name?.toLowerCase().includes(q) ||
-          p.description?.toLowerCase().includes(q)
-      );
-    }
-    setFiltered(result);
+  const filtered = useMemo(() => {
+    return products.filter((p) => {
+      const matchesCategory = activeCategory === "All" || p.category === activeCategory;
+      const matchesSearch =
+        !search.trim() ||
+        p.name.toLowerCase().includes(search.trim().toLowerCase()) ||
+        p.description.toLowerCase().includes(search.trim().toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
   }, [products, activeCategory, search]);
 
   const placeholders = Array.from({ length: 8 }).map((_, i) => (
@@ -111,19 +107,23 @@ export default function StorePage() {
           ? placeholders
           : filtered.length === 0
           ? <div className="empty-state"><p>No products found.</p></div>
-          : filtered.map((p) => (
-              <Link to={`/products/${p.id}`} key={p.id} className="product-card">
+          : filtered.map((p, index) => (
+              <Link
+                to={`/products/${p.id}`}
+                key={p.id || `${p.name}-${index}`}
+                className="product-card"
+              >
                 <div className="image-container">
                   <img
                     src={p.img}
                     alt={p.name}
-                    onError={(e) => e.currentTarget.src = "/placeholder-image.png"}
+                    onError={(e) => (e.currentTarget.src = "/placeholder-image.png")}
                   />
                 </div>
                 <div className="product-info">
                   <h3 className="product-name">{p.name}</h3>
                   <p className={`price ${p.available ? "price-green" : "price-grey"}`}>
-                    {p.price}
+                    ${Number(p.price).toFixed(2)}
                   </p>
                 </div>
               </Link>
