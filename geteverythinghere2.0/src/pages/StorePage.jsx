@@ -5,6 +5,13 @@ import "../stylesheet/store.css";
 const capitalize = (s) =>
   s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
 
+const getImageUrl = (imgPath) => {
+  if (!imgPath) return "/placeholder-image.png";
+  return imgPath.startsWith("http")
+    ? imgPath
+    : `https://geh-backend.onrender.com/${imgPath.replace(/^\/+/, "")}`;
+};
+
 export default function StorePage() {
   const [products, setProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
@@ -18,26 +25,28 @@ export default function StorePage() {
     const fetchProducts = async () => {
       setLoading(true);
       setError(null);
+
       try {
         const res = await fetch("https://geh-backend.onrender.com/products/");
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
 
         const list = data.map((p) => ({
-          id: p._id,
-          name: p.productName || "Unnamed Product",
-          price: p.productPrice || 0,
-          img:
-            Array.isArray(p.productImages) && p.productImages.length > 0
-              ? `https://geh-backend.onrender.com${p.productImages[0]}`
-              : "/placeholder-image.png",
-          category: (() => {
-            let cat = capitalize(p.productCategory);
-            if (cat === "Iphones") cat = "iPhones";
-            return cat;
-          })(),
-          description: p.productDescription || "",
-          available: p.productStock > 0,
+          id: p._id || p.id || p.productId,
+          name: p.productName || p.title || p.name || "Unnamed Product",
+          price: p.productPrice || p.price || p.amount || 0,
+          img: getImageUrl(
+            (Array.isArray(p.productImages) && p.productImages[0]) ||
+              p.image ||
+              (p.images && p.images[0])
+          ),
+          category: capitalize(p.productCategory || p.category || p.type || "Other"),
+          description: p.productDescription || p.description || p.details || "",
+          available:
+            (p.productStock ?? p.stock ?? p.qty ?? p.quantity ??
+              (typeof p.available === "string"
+                ? p.available.toLowerCase() === "available"
+                : 0)) > 0,
         }));
 
         setProducts(list);
@@ -123,8 +132,13 @@ export default function StorePage() {
                 <div className="product-info">
                   <h3 className="product-name">{p.name}</h3>
                   <p className={`price ${p.available ? "price-green" : "price-grey"}`}>
-                    ${Number(p.price).toFixed(2)}
+                    GHC {Number(p.price).toFixed(2)}
                   </p>
+                  <span
+                    className={`availability-tag ${p.available ? "available" : "unavailable"}`}
+                  >
+                    {p.available ? "Available" : "Out of stock"}
+                  </span>
                 </div>
               </Link>
             ))}
