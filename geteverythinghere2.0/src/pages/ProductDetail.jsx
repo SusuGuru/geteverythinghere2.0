@@ -13,8 +13,7 @@ export default function ProductDetail() {
 
   // Fetch ONE product by ID (from the general products endpoint)
   useEffect(() => {
-    setLoading(true);
-
+    setLoading(true); 
     fetch("https://geh-backend.onrender.com/api/v1/products/")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to load products");
