@@ -170,10 +170,11 @@
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 320px));
   justify-content: center;
   gap: 20px;
-  }
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+justify-items: stretch;  
+}
 
 .service {
   background-color: #2e1f12; /* same as about background */
@@ -182,7 +183,8 @@
   text-align: center;
   transition: transform 0.3s ease;
   box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-}
+  width: 300px;
+  }
 
 .service:hover {
   transform: translateY(-5px);
@@ -720,4 +722,8 @@ footer .flex.gap-6 a:hover img {
   text-align: left !important;
   align-items: flex-start !important;
   justify-content: flex-start !important;
+
+}
+.about-text {
+  margin-left: 550px; /* shifts the text to the right */
 }
