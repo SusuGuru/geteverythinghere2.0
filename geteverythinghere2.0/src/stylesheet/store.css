@@ -123,7 +123,7 @@ nav {
   display: flex;
   flex-direction: column;
   padding: 10px 8px;
-  gap: 1px;
+  gap: 15px;
 }
 
 .product-name {
