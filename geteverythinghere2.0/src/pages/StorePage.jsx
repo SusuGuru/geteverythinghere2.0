@@ -30,40 +30,32 @@ export default function StorePage() {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
 
-        console.log("Raw product data:", data); // Debug backend fields
-
         const list = data.map((p) => ({
           id: p._id || p.id || p.productId,
           name: p.productName || p.title || p.name || "Unnamed Product",
           price: p.productPrice || p.price || p.amount || 0,
           img: getImageUrl(
             (Array.isArray(p.productImages) && p.productImages[0]) ||
-            p.image ||
-            (p.images && p.images[0])
+              p.image ||
+              (p.images && p.images[0])
           ),
           category: capitalize(p.productCategory || p.category || p.type || "Other"),
           description: p.productDescription || p.description || p.details || "",
           available: (() => {
-            // Check numeric stock fields first
             const stock = p.productStock ?? p.stock ?? p.qty ?? p.quantity;
             if (stock != null) {
               const stockNum = Number(stock);
               if (!isNaN(stockNum)) return stockNum > 0;
             }
-
-            // Check string field
             if (p.available != null && typeof p.available === "string") {
               return p.available.trim().toLowerCase() === "available";
             }
-
-            // Default fallback
             return false;
           })(),
         }));
 
         setProducts(list);
       } catch (err) {
-        console.error("Fetch error:", err);
         setError(err.message || "Failed to load products");
       } finally {
         setLoading(false);
@@ -86,10 +78,11 @@ export default function StorePage() {
 
   const placeholders = Array.from({ length: 8 }).map((_, i) => (
     <div key={i} className="product-card placeholder">
-      <div className="image-container placeholder-box">Loading...</div>
+      <div className="image-container placeholder-box" />
       <div className="product-info">
         <h3 className="product-name">Loading...</h3>
-        <p className="price price-grey">Loading...</p>
+        <p className="status loading">Loading...</p>
+        <p className="price loading">Loading...</p>
       </div>
     </div>
   ));
@@ -110,6 +103,7 @@ export default function StorePage() {
               </button>
             ))}
           </div>
+
           <div className="search-box">
             <input
               type="search"
@@ -127,31 +121,39 @@ export default function StorePage() {
         {loading
           ? placeholders
           : filtered.length === 0
-          ? <div className="empty-state"><p>No products found.</p></div>
+          ? (
+            <div className="empty-state">
+              <p>No products found.</p>
+            </div>
+          )
           : filtered.map((p, index) => (
-            <Link
-              to={`/products/${p.id}`}
-              key={p.id || `${p.name}-${index}`}
-              className="product-card"
-            >
-              <div className="image-container">
-                <img
-                  src={p.img}
-                  alt={p.name}
-                  onError={(e) => (e.currentTarget.src = "/placeholder-image.png")}
-                />
-              </div>
-              <div className="product-info">
-                <h3 className="product-name">{p.name}</h3>
-                <p className={`price ${p.available ? "price-green" : "price-grey"}`}>
-                  GHC {Number(p.price).toFixed(2)}
-                </p>
-                <span className={`availability-tag ${p.available ? "available" : "unavailable"}`}>
-                  {p.available ? "Available" : "Out of stock"}
-                </span>
-              </div>
-            </Link>
-          ))}
+              <Link
+                to={`/products/${p.id}`}
+                key={p.id || `${p.name}-${index}`}
+                className="product-card"
+              >
+                <div className="image-container">
+                  <img
+                    src={p.img}
+                    alt={p.name}
+                    onError={(e) => (e.currentTarget.src = "/placeholder-image.png")}
+                  />
+                </div>
+
+                {/* ⭐⭐ NAME → STATUS → PRICE (REARRANGED) ⭐⭐ */}
+                <div className="product-info">
+                  <h3 className="product-name">{p.name}</h3>
+
+                  <p className={`status ${p.available ? "in" : "out"}`}>
+                    {p.available ? "Available" : "Out of stock"}
+                  </p>
+
+                  <p className={`price ${p.available ? "active" : "inactive"}`}>
+                    GHC {Number(p.price).toFixed(2)}
+                  </p>
+                </div>
+              </Link>
+            ))}
       </div>
 
       <footer className="store-footer">
