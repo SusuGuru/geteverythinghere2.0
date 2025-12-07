@@ -14,7 +14,6 @@ const getImageUrl = (imgPath) => {
 export default function StorePage() {
   const [products, setProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
-  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -24,7 +23,6 @@ export default function StorePage() {
     const fetchProducts = async () => {
       setLoading(true);
       setError(null);
-
       try {
         const res = await fetch("https://geh-backend.onrender.com/products/");
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -66,15 +64,8 @@ export default function StorePage() {
   }, []);
 
   const filtered = useMemo(() => {
-    return products.filter((p) => {
-      const matchesCategory = activeCategory === "All" || p.category === activeCategory;
-      const matchesSearch =
-        !search.trim() ||
-        p.name.toLowerCase().includes(search.trim().toLowerCase()) ||
-        p.description.toLowerCase().includes(search.trim().toLowerCase());
-      return matchesCategory && matchesSearch;
-    });
-  }, [products, activeCategory, search]);
+    return products.filter((p) => activeCategory === "All" || p.category === activeCategory);
+  }, [products, activeCategory]);
 
   const placeholders = Array.from({ length: 8 }).map((_, i) => (
     <div key={i} className="product-card placeholder">
@@ -90,7 +81,6 @@ export default function StorePage() {
   return (
     <div className="store-page">
       <div className="store-header">
-        <h1>Store</h1>
         <div className="store-controls">
           <div className="tabs">
             {categories.map((cat) => (
@@ -102,15 +92,6 @@ export default function StorePage() {
                 {cat}
               </button>
             ))}
-          </div>
-
-          <div className="search-box">
-            <input
-              type="search"
-              placeholder="Search products..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
           </div>
         </div>
       </div>
@@ -140,12 +121,13 @@ export default function StorePage() {
                   />
                 </div>
 
-                {/* ⭐⭐ NAME → STATUS → PRICE (REARRANGED) ⭐⭐ */}
                 <div className="product-info">
                   <h3 className="product-name">{p.name}</h3>
 
+                  {/* ✅ Status with dot */}
                   <p className={`status ${p.available ? "in" : "out"}`}>
-                    {p.available ? "Available" : "Out of stock"}
+                    <span className={`dot ${p.available ? "green" : "red"}`}></span>
+                    <span>{p.available ? "Available" : "Out of stock"}</span>
                   </p>
 
                   <p className={`price ${p.available ? "active" : "inactive"}`}>
