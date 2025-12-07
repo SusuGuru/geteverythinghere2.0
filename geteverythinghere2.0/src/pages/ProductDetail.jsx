@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import "../stylesheet/details.css";
+import Logo from "../assets/EVERYTHING.png";
 
 const getImageUrl = (imgPath) => {
   if (!imgPath) return "/placeholder-image.png";
@@ -10,7 +11,7 @@ const getImageUrl = (imgPath) => {
 };
 
 export default function ProductDetail() {
-  const { id } = useParams(); // matches App.jsx route
+  const { id } = useParams(); // matches :id in App.jsx
 
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState("");
@@ -24,6 +25,7 @@ export default function ProductDetail() {
       setError("");
 
       try {
+        // Fetch single product by ID
         const res = await fetch(`https://geh-backend.onrender.com/products/${id}`);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
@@ -34,7 +36,6 @@ export default function ProductDetail() {
           return;
         }
 
-        // Map fields similarly to store page
         const mapped = {
           id: data._id || data.id,
           name: data.productName || data.title || "Unnamed Product",
@@ -76,7 +77,9 @@ export default function ProductDetail() {
     <div className="product-detail-page">
       <header className="product-header">
         <div className="header-container">
-          <Link to="/" className="logo">GetEverythingHere</Link>
+        <Link to="/" className="logo">
+  <img src={Logo} alt="GetEverythingHere" className="logo-img" />
+</Link>
           <nav>
             <ul>
               <li><Link to="/store">Products</Link></li>
@@ -88,7 +91,6 @@ export default function ProductDetail() {
       </header>
 
       <div className="product-detail">
-        {/* LEFT */}
         <div className="image-section">
           <div className="image-wrapper">
             <img
@@ -113,7 +115,6 @@ export default function ProductDetail() {
           </div>
         </div>
 
-        {/* RIGHT */}
         <div className="details-section">
           <Link to="/store" className="back-link">← Back to Store</Link>
 

@@ -3,14 +3,13 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Navbar from "./components/Navbar";
 import LandingPage from "./pages/LandingPage";
 import StorePage from "./pages/StorePage";
-import ProductDetailsPage from "./pages/ProductDetail";
+import ProductDetail from "./pages/ProductDetail";
 
 import './stylesheet/navbar.css';
 import './stylesheet/landing.css';
 import './stylesheet/store.css';
 import './stylesheet/details.css';
 
-// Wrapper to conditionally render Navbar
 function AppContent() {
   const location = useLocation();
 
@@ -19,23 +18,21 @@ function AppContent() {
 
   return (
     <div className="App">
-      {shouldShowNavbar && <Navbar />} {/* Navbar only on Store page */}
+      {shouldShowNavbar && <Navbar />}
 
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/store" element={<StorePage />} />
-        <Route path="/product/:productName" element={<ProductDetailsPage />} />
+        <Route path="/products/:id" element={<ProductDetail />} /> {/* matches StorePage links */}
       </Routes>
     </div>
   );
 }
 
-function App() {
+export default function App() {
   return (
     <Router>
       <AppContent />
     </Router>
   );
 }
-
-export default App;

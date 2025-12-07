@@ -69,11 +69,7 @@
 }
 
 /* === ABOUT US SECTION === */
-.about-section {
-  background-color: #2e1f12; /* dark brown */
-  color: #f5f0e6;
-  padding: 80px 10%;
-}
+
 
 .about-inner {
   display: grid;
@@ -104,7 +100,7 @@
   background-color: #2e1f12;
   color: #f5f0e6;
   padding: 80px 10%;
-  text-align: center;
+  text-align: left;
 }
 
 .about-inner {
@@ -161,8 +157,10 @@
 .services-section {
   background-color: #3a2918; /* slightly lighter brown */
   color: #f5f0e6;
-  padding: 80px 10%;
+  padding: 60px 5%;
   text-align: center;
+  margin-top: 0 !important;
+  padding-top: 40px; 
 }
 
 .services-section h2 {
@@ -172,9 +170,10 @@
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
-}
+  grid-template-columns: repeat(auto-fit, minmax(200px, 320px));
+  justify-content: center;
+  gap: 20px;
+  }
 
 .service {
   background-color: #2e1f12; /* same as about background */
@@ -199,13 +198,19 @@
 }
 
 .service h4 {
-  color: #fbbf24;
+  color: #fff;
   margin-bottom: 10px;
   font-size: 1.2rem;
 }
 
 .service p {
   color: #f0e7dc;
+}
+
+.services-inner {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1200px;
 }
 
 /* === CONTACT SECTION === */
@@ -315,7 +320,7 @@
 }
 .about-section {
   padding: 60px 20px;
-  text-align: center;
+  text-align: left;
 }
 
 .about-cards {
@@ -362,7 +367,7 @@
 .about-info h4 {
   font-size: 2rem;
   margin-bottom: 10px;
-  color: #b8860b; /* subtle gold accent */
+  color:  #fff; /* subtle gold accent */
 }
 
 .about-info p {
@@ -706,4 +711,13 @@ footer .flex.gap-6 a img {
 
 footer .flex.gap-6 a:hover img {
   transform: scale(1.2);
+}
+.about-section {
+  margin: 0;
+  padding-bottom: 20px !important;
+}
+.about-card .about-info {
+  text-align: left !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
 }

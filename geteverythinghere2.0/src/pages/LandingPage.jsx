@@ -48,9 +48,8 @@ export default function LandingPage() {
             <h2>About Us</h2>
             <h3>Empowering Your Digital Life</h3>
             <p>
-              At GetEverythingHere, we curate the latest in technology — from
-              smartphones to smart home devices — delivering quality products
-              and great service across Ghana.
+              At Gadget Pro Ghana, we're passionate about bringing you the latest in technology. From smartphones to smart home devices, we curate a selection of high-quality gadgets to enhance your everyday life.
+Our commitment is to provide exceptional products and customer service, ensuring you always have the best tech experience possible
             </p>
           </div>
 
