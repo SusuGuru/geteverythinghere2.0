@@ -2,8 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import "../stylesheet/details.css";
 
+const getImageUrl = (imgPath) => {
+  if (!imgPath) return "/placeholder-image.png";
+  return imgPath.startsWith("http")
+    ? imgPath
+    : `https://geh-backend.onrender.com/${imgPath.replace(/^\/+/, "")}`;
+};
+
 export default function ProductDetail() {
-  const { id } = useParams();
+  const { id } = useParams(); // matches App.jsx route
 
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState("");
@@ -13,41 +20,39 @@ export default function ProductDetail() {
 
   useEffect(() => {
     const loadProduct = async () => {
+      setLoading(true);
+      setError("");
+
       try {
-        setLoading(true);
-
-        const res = await fetch("https://geh-backend.onrender.com/products/");
-        if (!res.ok) throw new Error("Failed to fetch products");
-
+        const res = await fetch(`https://geh-backend.onrender.com/products/${id}`);
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
 
-        // Find the product using MongoDB ID
-        const found = data.find((p) => String(p._id) === String(id));
-
-        if (!found) {
+        if (!data) {
           setError("Product not found.");
           setLoading(false);
           return;
         }
 
-        // Map fields
+        // Map fields similarly to store page
         const mapped = {
-          id: found._id,
-          name: found.productName || "Unnamed Product",
-          price: found.productPrice || 0,
-          available: found.productStock > 0,
-          specs: found.productSpecification || [],
-          images: found.productImages || []
+          id: data._id || data.id,
+          name: data.productName || data.title || "Unnamed Product",
+          price: data.productPrice || data.price || 0,
+          available: (() => {
+            const stock = data.productStock ?? data.stock ?? data.qty ?? data.quantity;
+            if (stock != null) return Number(stock) > 0;
+            if (data.available != null && typeof data.available === "string") {
+              return data.available.trim().toLowerCase() === "available";
+            }
+            return false;
+          })(),
+          specs: data.productSpecification || data.specs || [],
+          images: Array.isArray(data.productImages) ? data.productImages : [data.image],
+          description: data.productDescription || data.description || "",
         };
 
-        // Create full URLs
-        const imgs = mapped.images.map((img) =>
-          img
-            ? img.startsWith("/")
-              ? `https://geh-backend.onrender.com${img}`
-              : `https://geh-backend.onrender.com/${img}`
-            : "/placeholder-image.png"
-        );
+        const imgs = mapped.images.map(getImageUrl);
 
         setProduct(mapped);
         setAllImages(imgs);
@@ -63,20 +68,18 @@ export default function ProductDetail() {
     loadProduct();
   }, [id]);
 
-  // STATES
   if (loading) return <p className="not-found">Loading product...</p>;
   if (error) return <p className="not-found">{error}</p>;
   if (!product) return <p className="not-found">Product not found.</p>;
 
   return (
-    <div>
-      {/* HEADER */}
+    <div className="product-detail-page">
       <header className="product-header">
         <div className="header-container">
           <Link to="/" className="logo">GetEverythingHere</Link>
           <nav>
             <ul>
-              <li><Link to="/store">Product</Link></li>
+              <li><Link to="/store">Products</Link></li>
               <li><Link to="/about">About</Link></li>
               <li><Link to="/contact">Contact</Link></li>
             </ul>
@@ -84,7 +87,6 @@ export default function ProductDetail() {
         </div>
       </header>
 
-      {/* DETAIL SECTION */}
       <div className="product-detail">
         {/* LEFT */}
         <div className="image-section">
@@ -116,19 +118,18 @@ export default function ProductDetail() {
           <Link to="/store" className="back-link">← Back to Store</Link>
 
           <h2>{product.name}</h2>
-          <h3 className="price">${Number(product.price).toFixed(2)}</h3>
-
+          <p>{product.description}</p>
+          <h3 className="price">GHC {Number(product.price).toFixed(2)}</h3>
           <p className="stock-status">
             {product.available ? "✅ In Stock" : "❌ Out of Stock"}
           </p>
 
           <h4>Specifications</h4>
           <ul>
-            {product.specs.length > 0 ? (
-              product.specs.map((s, i) => <li key={i}>{s}</li>)
-            ) : (
-              <li>No specifications available</li>
-            )}
+            {product.specs.length > 0
+              ? product.specs.map((s, i) => <li key={i}>{s}</li>)
+              : <li>No specifications available</li>
+            }
           </ul>
 
           <Link to="/contact" className="order-btn">Contact to Order</Link>

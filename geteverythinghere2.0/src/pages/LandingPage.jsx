@@ -212,7 +212,7 @@ export default function LandingPage() {
             </a>
 
             <a
-              href="https://facebook.com/YourUsername"
+              href="https://facebook.com/larissa.brayka.5"
               target="_blank"
               rel="noopener noreferrer"
               className="transform hover:-translate-y-1 transition"
@@ -225,7 +225,7 @@ export default function LandingPage() {
             </a>
 
             <a
-              href="https://instagram.com/YourUsername"
+              href="https://instagram.com/brayka.originals"
               target="_blank"
               rel="noopener noreferrer"
               className="transform hover:-translate-y-1 transition"
