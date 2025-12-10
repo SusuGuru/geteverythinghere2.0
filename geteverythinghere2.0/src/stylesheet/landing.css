@@ -191,8 +191,6 @@ justify-items: stretch;
   box-shadow: 0 4px 15px rgba(0,0,0,0.25);
   width: 300px;
   font-family: space-grotesk;
-  flex-wrap: wrap;
-  align-items: flex-start;
   }
 
 .service:hover {
