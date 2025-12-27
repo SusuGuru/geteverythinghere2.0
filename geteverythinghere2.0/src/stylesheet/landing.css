@@ -1,16 +1,22 @@
 /* === HERO SECTION (FLOATING) === */
 .hero-hero {
-  position: relative;
-  min-height: 100vh;
-  background: linear-gradient(180deg, #0a1930 0%, #0b1736 100%);
+  width: 100%;
+  height: 100vh; /* full viewport height */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
-  color: #fff;
-  overflow: hidden;
-  padding: 60px 20px;
+  justify-content: center;
+  position: relative;
+}
+.hero-hero {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 
@@ -28,13 +34,13 @@
 }
 
 /* Floating image positions */
-.f1 { top: 25%; left: 20%; width: 150px; }
-.f2 { top: 35%; right: 20%; width: 220px; }
-.f3 { bottom: 25%; left: 25%; width: 150px; }
-.f4 { bottom: 15%; right: 20%; width: 150px; }
+.f1 { top: 25%; left: 20%; width: 140px; }
+.f2 { top: 25%; right: 8%; width: 210px; }
+.f3 { bottom: 15%; left: 18%; width: 140px; }
+.f4 { bottom: 15%; right: 18%; width: 140px; }
 
 .hero-title {
-  font-size: 5.0rem;
+  font-size: 4.5rem;
   font-weight: 700;
   margin-bottom: 15px;
   font-family: 'Orbitron';
@@ -42,7 +48,7 @@
 }
 
 .hero-sub {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   color: rgba(255,255,255,0.9);
   margin-bottom: 35px;
   font-family: 'Orbitron';

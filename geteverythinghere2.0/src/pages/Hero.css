@@ -1,0 +1,59 @@
+.hero-hero {
+  width: 100%;
+  height: 100vh; /* full viewport height */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.hero-hero {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  /* Background with overlay */
+  background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('../assets/background.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-floating {
+  background: rgba(0, 0, 0, 0.4); /* optional overlay for readability */
+  color: white;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 600px;
+}
+
+.hero-floating h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero-floating p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-floating button {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff6b6b;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.hero-floating button:hover {
+  background-color: #ff4c4c;
+}

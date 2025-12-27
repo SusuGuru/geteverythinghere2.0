@@ -1,5 +1,6 @@
 import React from "react";
 import "../stylesheet/landing.css";
+import "../assets/background.jpeg";
 
 export default function LandingPage() {
   return (
